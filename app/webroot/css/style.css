@@ -1,0 +1,26 @@
+/* 
+    Document   : style
+    Created on : 2013/08/09, 17:01:08
+    Author     : macbook_003
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.logout {
+    float: right !important;
+}
+
+#header .test a {
+    color: white !important;
+    text-decoration: none;
+    /*position: fixed;*/
+}
+
+#header .test a:hover {
+    color: red !important;
+    /*position: fixed;*/
+}
