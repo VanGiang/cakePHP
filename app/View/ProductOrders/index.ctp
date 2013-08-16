@@ -1,7 +1,7 @@
 <!-- File: /app/View/ProductOrders/index.ctp -->
 
 <h1>List product orders</h1>
-<table>
+<table class="table table-striped">
     <tr>
         <th>Index</th>
         <th>Product name</th>
@@ -46,3 +46,6 @@
     <?php endforeach; ?>
     <tr><h3>Total: <?php echo $total; ?>$</h3></tr>
 </table>
+<?php 
+    echo $this->Html->link('Buy now', '#', array('class' => 'btn btn-success btn-large'));
+?>

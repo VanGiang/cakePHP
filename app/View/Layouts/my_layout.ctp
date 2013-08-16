@@ -58,8 +58,8 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
                     <div class="navbar-inner">
                       <a class="brand" href="#">Framgia Viet Nam</a>
                       <ul class="nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Link</a></li>
+                        <li class="active"><?php echo $this->Html->link('Home', '/'); ?></li>
+                        <li><?php echo $this->Html->link('Users', '/users'); ?></li>
                         <li><a href="#">Link</a></li>
                       </ul>
                     <ul class="nav pull-right">
