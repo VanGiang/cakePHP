@@ -10,17 +10,16 @@ root {
     display: block;
 }
 
-.logout {
-    float: right !important;
+#content {
+    margin-top: 50px;
 }
 
-#header .test a {
-    color: white !important;
-    text-decoration: none;
-    /*position: fixed;*/
+.carousel .item {
+    height: 500px;
+    width: 1224px;
 }
 
-#header .test a:hover {
-    color: red !important;
-    /*position: fixed;*/
+.image-product {
+    width: 300px !important;
+    height: 300px !important;
 }

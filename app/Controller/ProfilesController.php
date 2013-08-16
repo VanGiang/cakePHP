@@ -11,6 +11,8 @@
         public $helpers = Array('Html', 'From', 'Session');
         
         public function view($id = null) {
+//            Debugger::dump($this->data->User);
+//            die();
             if (!$id) {
                 throw new NotFoundException(__('Invalid profile'));
             }

@@ -29,47 +29,113 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-
-		echo $this->Html->css('cake.generic');
-        echo $this->Html->css('style');
-        echo $this->Html->css('bootstrap');
-        echo $this->Html->css('bootstrap.min');
-        echo $this->Html->css('bootstrap-responsive');
-        echo $this->Html->css('bootstrap-responsive.min');
-
-		echo $this->fetch('meta');
+//            'cake.generic', 
+		echo $this->Html->css(array(
+            'style', 
+            'bootstrap', 
+            'bootstrap.min', 
+            'bootstrap-responsive', 
+            'bootstrap-responsive.min'
+            ));
+        
+        echo $this->Html->script('jquery-2.0.3.min');
+        echo $this->Html->script(array(
+            'jquery-ui',
+            'bootstrap.min',
+            'bootstrap',
+            'bootstrap-carousel',
+        ));
+ 		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://framgia.com'); ?></h1>
-            
-            <div class='test'>
-                <?php echo $this->Html->link('Home', '/'); ?> |
-                <?php echo $this->Html->link('Users', '/users'); ?> | 
-                <?php echo $this->Html->link('Posts', '/posts'); ?>
+        <div id="header">
+        <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                      <a class="brand" href="#">Framgia Viet Nam</a>
+                      <ul class="nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Link</a></li>
+                      </ul>
+                    <ul class="nav pull-right">
+                       <?php 
+                          if ($current_user) {
+                            echo "<li>{$this->Html->link('Cart', '/productorders')}</li>";
+                            echo '<li class="divider-vertical"></li>';
+                          }
+                       ?> 
+                      <li>
+                          <?php
+                              if ($current_user) { 
+                                  echo $this->Html->link('Hello: '.$current_user['username'], '/users/logout');
+                              } else {
+                                  echo $this->Html->link('Xin vui long dang nhap he thong', '/users/login');
+                              }
+                           ?>
+                      </li>
+                   </ul>
+                   </div>
+                </div>
             </div>
-            
-            <div>
-                <?php 
-                    if ($this->Session->check('User')) { 
-                        echo 'Hello: '.$this->Html->link($this->Session->read('User.name'), '/users/logout');
-                    } else {
-                        echo $this->Html->link('Xin vui long dang nhap he thong', '/users/login');
-                    }
-                ?>
-            
-            </div>
-		</div>
         
-		<div id="content">
+		    
+		    </div>
+        
+        <div id="content">
 
-			<?php echo $this->Session->flash(); ?>
+            <div class="container-fluid">
+                <div id="myCarousel" class="carousel slide">
+                      <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                      </ol>
+                      <!-- Carousel items -->
+                      <div class="carousel-inner">
+                        <div class="item">
+                            <?php echo "<img src='{$this->webroot}img/thumbnails/thum2.jpg'>";?>
+                        </div>
+                        <div class="active item">
+                            <?php echo "<img src='{$this->webroot}img/thumbnails/thum4.jpg'>";?>
+                        </div>
+                        <div class="item">
+                            <?php echo "<img src='{$this->webroot}img/thumbnails/thum5.jpg'>";?>
+                        </div>
+                      </div>
+                      <!-- Carousel nav -->
+                      <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                      <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+                  </div>
+                
+                <div class="row-fluid">
+                    <div class="span3">
+                        <!--Sidebar content-->
+                        <ul class="nav nav-tabs nav-stacked">
+                            <?php 
+                                $categories = ClassRegistry::init('Categories')->find('all');
+                                foreach ($categories as $category) {
+                                    echo '<li>'.$this->Html->link(
+                                        $category['Categories']['name'], '/devices/index/'.$category['Categories']['id']
+                                    ).'</li>';
+                                }
+                            ?>
+                            <li><?php echo $this->Html->link('All Product', '/devices'); ?></li>
+                        </ul>
+                    </div>
+                    <div class="span9" style="float: right !important;">
+                      <!--Body content-->
+                        <?php echo $this->Session->flash(); ?>
 
-			<?php echo $this->fetch('content'); ?>
+                        <?php echo $this->fetch('content'); ?>
+                    </div>
+                </div>
+            </div>
+			
 		</div>
 		<div id="footer">
 			<?php echo $this->Html->link(

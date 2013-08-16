@@ -32,28 +32,29 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-
+    public $helpers = Array('Html', 'From', 'Session', 'Category');    
     public $components = array(
         'Session',
         'Auth' => array(
             'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
+            'logoutRedirect' => array('controller' => 'devices', 'action' => 'index')
         )
     );
 
     public function beforeFilter() {
         $this->Auth->allow('index', 'view');
         $this->layout = "my_layout";
+        $this->set('current_user', $this->Auth->user());
     }
     
     public function isAuthorized($user) {
-    // Admin can access every action
-    if (isset($user['role']) && $user['role'] === 'admin') {
-        return true;
-    }
+        // Admin can access every action
+        if (isset($user['role']) && $user['role'] === 'admin') {
+            return true;
+        }
 
-    // Default deny
-    return false;
-}
+        // Default deny
+        return false;
+    }
     
 }
