@@ -44,10 +44,10 @@
                     array('action' => 'view', $device['Device']['id'])); ?>
                 </h3>
                 <p><?php echo $device['Device']['description']; ?>...</p>
-                <p><a class="btn" href="#">View details</a></p>
+                <p><?php echo $this->Html->link('View details', 'view/'.$device['Device']['id'], array('class' => 'btn')); ?></p>
                 <p><?php echo $this->Html->link(
                     'Buy',
-                    array('action' => '../productorders/add/'.$device['Device']['id']),
+                    array('action' => '../productorders/add_to_cart/'.$device['Device']['id']),
                     array('class' => 'btn')); ?>
                 </p>
               </div>

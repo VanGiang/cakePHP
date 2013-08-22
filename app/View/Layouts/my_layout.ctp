@@ -44,14 +44,27 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
             'bootstrap.min',
             'bootstrap',
             'bootstrap-carousel',
+            'layout',
+            'device',
         ));
  		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+    <meta property="fb:admins" content="{100001154855280}"/>
 </head>
 <body>
 	<div id="container">
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/vi_VN/all.js#xfbml=1";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+
         <div id="header">
         <div class="navbar navbar-inverse navbar-fixed-top">
                 <div class="navbar">
@@ -65,7 +78,8 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
                     <ul class="nav pull-right">
                        <?php 
                           if ($current_user) {
-                            echo "<li>{$this->Html->link('Cart', '/productorders')}</li>";
+                              $count_product = count($this->Session->read('Product'));
+                              echo "<li>{$this->Html->link("Cart ($count_product)", '/productorders/view')}</li>";
                             echo '<li class="divider-vertical"></li>';
                           }
                        ?> 
@@ -116,8 +130,8 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
                     <div class="span3">
                         <!--Sidebar content-->
                         <ul class="nav nav-tabs nav-stacked">
-                            <?php 
-                                $categories = ClassRegistry::init('Categories')->find('all');
+                            <?php
+                                $categories = $this->App->getObject('Categories');
                                 foreach ($categories as $category) {
                                     echo '<li>'.$this->Html->link(
                                         $category['Categories']['name'], '/devices/index/'.$category['Categories']['id']
@@ -126,6 +140,7 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
                             ?>
                             <li><?php echo $this->Html->link('All Product', '/devices'); ?></li>
                         </ul>
+                        <div class="fb-like" data-href="https://www.facebook.com/pages/Webviet1234/450363101744588" data-width="280" data-show-faces="true" data-send="true"></div>
                     </div>
                     <div class="span9" style="float: right !important;">
                       <!--Body content-->

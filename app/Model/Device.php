@@ -3,8 +3,7 @@
         var $name = 'Device';
         var $belongsTo = array(
             'Category' => array(
-                'className' => 'Category',
-                'dependent' => true
+                'className' => 'Category'
             )
         );
         var $hasMany = array(

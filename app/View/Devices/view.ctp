@@ -1,4 +1,6 @@
 <!-- File: /app/View/Devices/view.ctp -->
+<meta property="fb:admins" content="{howareyoutoday123}"/>
+<div id="fb-root"></div>
 <h1><?php echo h($device['Device']['name']); ?></h1>
 <div class="img-polaroid span6">
 <?php 
@@ -24,4 +26,5 @@
         }
     ?>
 </p>
-            
+<div class="fb-comments" num_posts="4" order_by="reverse_time" 
+    data-href="<?php echo "{$this->webroot}devices/view/{$device['Device']['id']}";?>" data-width="470"></div>

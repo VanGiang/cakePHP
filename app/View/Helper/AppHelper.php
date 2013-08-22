@@ -34,4 +34,20 @@ class AppHelper extends Helper {
     public function isAdmin($user) {
         return ($user["role"] == "admin");
     }
+
+    public function getObject($obj, $query = null) {
+        if ($query) {
+            $object = ClassRegistry::init($obj)->find($query);
+        } else {
+            $object = ClassRegistry::init($obj)->find('all');
+        }
+        return $object;
+    }
+
+
+
+
+
+
+
 }
