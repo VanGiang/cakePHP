@@ -1,6 +1,6 @@
 $(function(){
     $('.message').addClass('alert alert-success');
-    $('#cart_quantities').keypress(function(event){
+    $('.cart_quantities').keypress(function(event){
         var quantities = $(this).val();
         var product_id = $(this).attr('data-product_id');
         if (event.which === 13) {
@@ -19,8 +19,12 @@ function updateCart(product_id, quantities) {
             quantities: quantities
         }
    }).success(function(msg){
-       alert('Update success!');
+       var test = $.parseJSON(msg);
+        console.log(test);
+        $('.total_price').hide();
+        $('.price').append("<span class='total_price'>"+test+"</span>");
+        alert('Update success!');
    }).fail(function() {
-       alert('Update fail. Please try again!');
+        alert('Update fail. Please try again!');
    });
 }

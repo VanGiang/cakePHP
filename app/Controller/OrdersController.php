@@ -8,8 +8,9 @@
 class OrdersController extends AppController {
     public $helpers = Array('Html', 'From', 'Session');
 
-    public function add(){
-
+    public function index(){
+        $orders = $this->Order->find('all');
+        $this->set('orders', $orders);
     }
 }
 ?>

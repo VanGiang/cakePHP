@@ -29,7 +29,6 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-//            'cake.generic', 
 		echo $this->Html->css(array(
             'style', 
             'bootstrap', 
@@ -40,17 +39,22 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
         
         echo $this->Html->script('jquery-2.0.3.min');
         echo $this->Html->script(array(
+            'jquery-2.0.3.min.map',
             'jquery-ui',
             'bootstrap.min',
             'bootstrap',
             'bootstrap-carousel',
             'layout',
             'device',
+            'jquery-latest',
         ));
  		echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
+    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="/hook/hook.css" type="text/css" />
+    <script src="/hook/hook.js" type="text/javascript"></script>
     <meta property="fb:admins" content="{100001154855280}"/>
 </head>
 <body>
@@ -103,6 +107,7 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
         <div id="content">
 
             <div class="container-fluid">
+                <?php if (!$this->App->isAdmin($current_user)) { ?>
                 <div id="myCarousel" class="carousel slide">
                       <ol class="carousel-indicators">
                         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -125,6 +130,7 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
                       <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
                       <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
                   </div>
+                <?php } ?>
                 
                 <div class="row-fluid">
                     <div class="span3">
@@ -143,6 +149,12 @@ $cakeDescription = __d('cake_dev', 'Framgia Viet Nam');
                         <div class="fb-like" data-href="https://www.facebook.com/pages/Webviet1234/450363101744588" data-width="280" data-show-faces="true" data-send="true"></div>
                     </div>
                     <div class="span9" style="float: right !important;">
+                    <div id="hook">
+<div id="loader">
+<div class="spinner"></div>
+</div>
+<span id="hook-text">Reloading...</span>
+</div>
                       <!--Body content-->
                         <?php echo $this->Session->flash(); ?>
 

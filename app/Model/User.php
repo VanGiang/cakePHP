@@ -35,7 +35,12 @@ App::uses('AuthComponent', 'Controller/Component');
             'Profile' => array(
                 'className' => 'Profile',
                 'dependent' => true
-            )); 
+            ),
+            'Order' => array(
+                'className' => 'Order',
+                'dependent' => true,
+            ),
+        ); 
 
         var $hasMany = array(
             'Product0rder' => array(

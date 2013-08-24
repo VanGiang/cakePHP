@@ -30,7 +30,7 @@
         <td>
             <input type="text" 
                 value="<?php echo $this->Session->read("Product.{$productorder['Device']['id']}.quantity"); ?>"
-                id="cart_quantities" 
+                class="cart_quantities" 
                 data-product_id="<?php echo ($this->Session->read("Product.{$productorder['Device']['id']}.id")); ?>"
                 style="width:50px;"/>
         </td>
@@ -45,7 +45,7 @@
         </td>
     </tr>
     <?php endforeach; ?>
-    <tr><h3>Total: <?php echo $total; ?>$</h3></tr>
+    <tr><h3><?php echo "Total: <span class='price'><span class='total_price'>{$total}</span></span>"; ?>$</h3></tr>
 </table>
 <?php 
     echo $this->Html->link('Buy now', array('action' => 'add'), array('class' => 'btn btn-success btn-large'));

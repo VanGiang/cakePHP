@@ -1,6 +1,6 @@
 <?php 
 class ProductOrdersController extends AppController {
-    public $helpers = Array('Html', 'From', 'Session');
+    public $helpers = Array('Html', 'From', 'Session', 'Js' => array('Jquery'));
 
     public function index() {
         $this->set('productorders', $this->ProductOrder->find('all'));
@@ -44,7 +44,7 @@ class ProductOrdersController extends AppController {
             $this->Session->setFlash('Cart empty. Please choose products other.');
             $this->redirect(array('controller' => 'devices', 'action' => 'index'));
         }
-        $total_price = 0;
+        $order = $this->ProductOrder->Order->findByUser_id($this->Auth->user('id'));
         foreach($this->Session->read('Product') as $product) {
             $device = $this->ProductOrder->Device->findById($product['id']);
             $this->checkNull($device, 'Device');
@@ -60,15 +60,9 @@ class ProductOrdersController extends AppController {
                     'quantity' => $product_order['ProductOrder']['quantity'] + 
                     $product['quantity']
                 );
-                $total_price = $data['quantity']*$device['Device']['price'];
-                $data_order = array(
-                    'id' => $product_order['ProductOrder']['order_id'],
-                    'total_price' => $total_price
-                );
-                $this->ProductOrder->Order->save($data_order);
             } else {
-                if ($total_price == 0) {
-                    $order = $this->ProductOrder->Order->save();
+                if (empty($order)){
+                    $order = $this->ProductOrder->Order->save(array('user_id' => $this->Auth->user('id')));
                 }
                 $data = array(
                     'name' => $device['Device']['name'],
@@ -81,13 +75,22 @@ class ProductOrdersController extends AppController {
                     'order_id' => $order['Order']['id'],
                 );
                 $this->ProductOrder->create();
-                $total_price += $data['price'] * $data['quantity'];
-                $this->ProductOrder->Order->save(
-                    array('id' => $order['Order']['id'], 'total_price' => $total_price)
-            )   ;
             }
             $this->ProductOrder->save($data);
         }
+        $product_orders = $this->ProductOrder->find('all', array(
+            'conditions' => array(
+                'ProductOrder.user_id' => $this->Auth->user('id'),
+                'status' => 1,
+        )));
+        $total_price = 0;
+        foreach($product_orders as $product_order){
+            $total_price += $product_order['ProductOrder']['price'] * $product_order['ProductOrder']['quantity'];
+        }
+        $this->ProductOrder->Order->save(array(
+            'id' => $order['Order']['id'],
+            'total_price' => $total_price,
+        ));
         $this->Session->delete('Product');
         $this->Session->setFlash(__('Thanks you for purchase.'));
         $this->redirect(array('controller' => 'devices', 'action' => 'index'));
@@ -100,6 +103,16 @@ class ProductOrdersController extends AppController {
             $q = $_POST['quantities'];
             $product_id = $_POST['product_id'];
             $this->Session->write("Product.{$product_id}.quantity", $q);
+            $total_price = 0;
+            foreach($this->Session->read('Product') as $product) {
+                $device = $this->ProductOrder->Device->findById($product['id']);
+                if ($device) {
+                    $total_price += $device['Device']['price'] * $product['quantity'];
+                } else {
+                    echo header("HTTP/1.0 404 Not Found");
+                }
+            }
+            echo json_encode($total_price);
         } else {
             echo header("HTTP/1.0 404 Not Found");
         }
